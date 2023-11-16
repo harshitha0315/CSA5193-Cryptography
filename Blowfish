@@ -1,0 +1,35 @@
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#define N 16
+#define BLOWFISH_P 18
+#define MAX_KEY_SIZE 56
+typedef uint32_t word;
+typedef uint8_t byte;
+typedef struct {
+    word P[BLOWFISH_P];
+    word S[4][256];
+} BlowfishContext;
+void blowfish_init(BlowfishContext *ctx, const byte *key, size_t key_len);
+void blowfish_encrypt_block(BlowfishContext *ctx, word *left, word *right);
+void blowfish_decrypt_block(BlowfishContext *ctx, word *left, word *right);
+int main() {
+    const char *key = "ThisIsABlowfishKey";
+    const char *data = "Hello, Blowfish!";
+    BlowfishContext ctx;
+    blowfish_init(&ctx, (const byte *)key, strlen(key));
+    word left = 0, right = 0;
+    memcpy(&left, data, sizeof(word));
+    memcpy(&right, data + sizeof(word), sizeof(word));
+    blowfish_encrypt_block(&ctx, &left, &right);
+    printf("Encrypted: %08x %08x\n", left, right);
+    blowfish_decrypt_block(&ctx, &left, &right);
+    printf("Decrypted: %08x %08x\n", left, right);
+    return 0;
+}
+void blowfish_init(BlowfishContext *ctx, const byte *key, size_t key_len) {
+}
+void blowfish_encrypt_block(BlowfishContext *ctx, word *left, word *right) {
+}
+void blowfish_decrypt_block(BlowfishContext *ctx, word *left, word *right) {
+}
