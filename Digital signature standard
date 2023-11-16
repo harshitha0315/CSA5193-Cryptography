@@ -1,0 +1,149 @@
+#include<stdio.h>
+#include<math.h>
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int mod_pow(int base, int exponent, int modulus) {
+    int result = 1;
+    while (exponent > 0) {
+        if (exponent % 2 == 1)
+            result = (result * base) % modulus;
+        base = (base * base) % modulus;
+        exponent /= 2;
+    }
+    return result;
+}
+
+int mod_inverse(int a, int m) {
+    for (int i = 1; i < m; i++) {
+        if ((a * i) % m == 1)
+            return i;
+    }
+    return -1;  // Inverse doesn't exist
+}
+
+int main() {
+    int p, xa, k, hm, h, x, q, g, e, z, y, r, s, u1, w, u2, v;
+
+    printf("p=");
+    scanf("%d", &p);
+    printf("private key(x):");
+    scanf("%d", &xa);
+    printf("k=");
+    scanf("%d", &k);
+    printf("H(m)=");
+    scanf("%d", &hm);
+    printf("Random variable(H):");
+    scanf("%d", &h);
+
+    x = p - 1;
+    e = 2;
+    while (0) {
+        if (gcd(x, e) == 0)
+            break;
+        e++;
+    }
+
+    q = gcd(x, e);
+    y = x / q;
+    z = mod_pow(h, y, p);
+    g = gcd(z, p);
+
+    printf("q=%d\n", q);
+    printf("g=%d\n", g);
+
+    r = mod_pow(g, k, p) % q;
+    s = (mod_inverse(k, q) * (hm + xa * r)) % q;
+    u1 = (hm * mod_inverse(s, q)) % q;
+    w = mod_inverse(s, q);
+    u2 = (r * w) % q;
+    v = (mod_pow(g, u1, p) * mod_pow(y, u2, p)) % q;
+
+    printf("r=%d\n", r);
+    printf("s=%d\n", s);
+    printf("u1=%d\n", u1);
+    printf("w=%d\n", w);
+    printf("u2=%d\n", u2);
+    printf("v=%d\n", v);
+
+    return 0;
+}
+#include<stdio.h>
+#include<math.h>
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int mod_pow(int base, int exponent, int modulus) {
+    int result = 1;
+    while (exponent > 0) {
+        if (exponent % 2 == 1)
+            result = (result * base) % modulus;
+        base = (base * base) % modulus;
+        exponent /= 2;
+    }
+    return result;
+}
+
+int mod_inverse(int a, int m) {
+    for (int i = 1; i < m; i++) {
+        if ((a * i) % m == 1)
+            return i;
+    }
+    return -1;  // Inverse doesn't exist
+}
+
+int main() {
+    int p, xa, k, hm, h, x, q, g, e, z, y, r, s, u1, w, u2, v;
+
+    printf("p=");
+    scanf("%d", &p);
+    printf("private key(x):");
+    scanf("%d", &xa);
+    printf("k=");
+    scanf("%d", &k);
+    printf("H(m)=");
+    scanf("%d", &hm);
+    printf("Random variable(H):");
+    scanf("%d", &h);
+
+    x = p - 1;
+    e = 2;
+    while (0) {
+        if (gcd(x, e) == 0)
+            break;
+        e++;
+    }
+
+    q = gcd(x, e);
+    y = x / q;
+    z = mod_pow(h, y, p);
+    g = gcd(z, p);
+
+    printf("q=%d\n", q);
+    printf("g=%d\n", g);
+
+    r = mod_pow(g, k, p) % q;
+    s = (mod_inverse(k, q) * (hm + xa * r)) % q;
+    u1 = (hm * mod_inverse(s, q)) % q;
+    w = mod_inverse(s, q);
+    u2 = (r * w) % q;
+    v = (mod_pow(g, u1, p) * mod_pow(y, u2, p)) % q;
+
+    printf("r=%d\n", r);
+    printf("s=%d\n", s);
+    printf("u1=%d\n", u1);
+    printf("w=%d\n", w);
+    printf("u2=%d\n", u2);
+    printf("v=%d\n", v);
+
+    return 0;
+}
+
