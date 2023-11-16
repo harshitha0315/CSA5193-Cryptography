@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <math.h>
+
+int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
+int mod_pow(int base, int exponent, int modulus) {
+    int result = 1;
+    while (exponent > 0) {
+        if (exponent % 2 == 1) {
+            result = (result * base) % modulus;
+        }
+        base = (base * base) % modulus;
+        exponent /= 2;
+    }
+    return result;
+}
+
+int main() {
+    int p, q, n, phi, e, d, m, x, y, z, c;
+
+    printf("enter the value of p = ");
+    scanf("%d", &p);
+    printf("enter the value of q=  ");
+    scanf("%d", &q);
+    printf("enter the plaintext (integer) = ");
+    scanf("%d", &m);
+
+    n = p * q;
+    x = p - 1;
+    y = q - 1;
+    phi = x * y;
+    e = 3; // You can choose a different value for e, often a prime number greater than 2
+
+    while (e < phi) {
+        if (gcd(e, phi) == 1)
+            break;
+        e++;
+    }
+
+    d = 1;
+    while ((d * e) % phi != 1) {
+        d++;
+    }
+
+    z = mod_pow(m, e, n);
+    c = z;
+
+    printf("Public key: {%d, %d}\n", e, n);
+    printf("Private key: {%d, %d}\n", d, n);
+    printf("Plaintext: %d\n", m);
+    printf("Ciphertext: %d\n", c);
+
+    return 0;
+}
+
